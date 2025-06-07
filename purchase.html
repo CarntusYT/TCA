@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Purchase</title>
+</head>
+<body style="background: #000; color: #fff;">
+    <h1>Purchase Page</h1>
+    <p>Thank you for your interest! Complete your purchase here.</p>
+    <form style="max-width: 400px; margin: 32px auto; background: #f8f8f8; padding: 24px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);" onsubmit="event.preventDefault(); window.location.href='thankyou.html';">
+        <div style="font-size:1.2em; font-weight:bold; color:#007700; margin-bottom:18px; text-align:center;">Amount Due: £5.00</div>
+        <label for="cardName" style="display:block; margin-bottom:8px; font-weight:bold;">Name on Card</label>
+        <input type="text" id="cardName" name="cardName" required style="width:100%; padding:8px; margin-bottom:16px; border-radius:6px; border:1px solid #ccc;">
+
+        <label for="cardNumber" style="display:block; margin-bottom:8px; font-weight:bold;">Card Number</label>
+        <input type="text" id="cardNumber" name="cardNumber" maxlength="19" required style="width:100%; padding:8px; margin-bottom:16px; border-radius:6px; border:1px solid #ccc;">
+
+        <div style="display:flex; gap:12px;">
+            <div style="flex:1;">
+                <label for="expDate" style="display:block; margin-bottom:8px; font-weight:bold;">Expiry Date</label>
+                <input type="text" id="expDate" name="expDate" placeholder="MM/YY" maxlength="5" required style="width:100%; padding:8px; border-radius:6px; border:1px solid #ccc;">
+            </div>
+            <div style="flex:1;">
+                <label for="cvc" style="display:block; margin-bottom:8px; font-weight:bold;">CVC</label>
+                <input type="text" id="cvc" name="cvc" maxlength="4" required style="width:100%; padding:8px; border-radius:6px; border:1px solid #ccc;">
+            </div>
+        </div>
+        <button type="submit" style="margin-top:24px; width:100%; background: linear-gradient(90deg, #FFD700 0%, #FFC300 100%); color: #333; border: none; border-radius: 8px; padding: 14px 0; font-size: 1.1em; font-weight: bold; box-shadow: 0 2px 8px rgba(0,0,0,0.10); cursor: pointer;">Pay £5.00</button>
+    </form>
+</body>
+</html>
