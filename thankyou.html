@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Thank You</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const messages = [
+                'T28FP3',
+                'AG5H7K',
+                'Z9X2Q1',
+                'AB3C4D',
+                'A1I2M3',
+                'RA678B'
+            ];
+            const idx = Math.floor(Math.random() * messages.length);
+            document.getElementById('random-text').textContent = messages[idx];
+        });
+    </script>
+</head>
+<body style="background: #000; color: #fff;">
+    <h1>Payment Successful!</h1>
+    <p>Here is some random text: <strong id="random-text"></strong></p>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>The Classic Arcade</title>
+    <link href="https://fonts.googleapis.com/css?family=Orbitron:900&display=swap" rel="stylesheet">
+</head>
+<body style="background: linear-gradient(135deg, #000 0%, #003300 100%); color: #fff;">
+    <img src="New Project(223).png" alt="Classic Arcade Logo" style="display:block; margin:32px auto 0 auto; max-width:220px; border-radius:16px; box-shadow:0 4px 16px rgba(0,0,0,0.3);">
+    <h1 style="
+        text-align: center;
+        color: #00ff00;
+        -webkit-text-stroke: 2px #fff;
+        font-size: 2.8em;
+        font-family: 'Orbitron', Arial, sans-serif;
+        margin-top: 48px;
+        margin-bottom: 32px;">
+        THE CLASSIC ARCADE
+    </h1>
+    <p style="
+        text-align: center;
+        color: #00ff00;
+        -webkit-text-stroke: 1px #fff;
+        font-size: 1.3em;
+        font-family: 'Orbitron', Arial, sans-serif;
+        margin-bottom: 32px;">
+        Welcome to The Classic Arcade also known as TCA. A website that makes games on Roblox. Our most recent game is as Sniper Madness.
+    </p>
+    
+    <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+        <button id="purchaseBtn" style="background: linear-gradient(90deg, #FFD700 0%, #FFC300 100%); color: #333; border: none; border-radius: 12px; padding: 24px 64px; font-size: 2em; font-weight: bold; box-shadow: 0 0 24px 6px #FFD700, 0 4px 16px rgba(0,0,0,0.15); cursor: pointer; margin-top: 32px; transition: box-shadow 0.2s, background 0.2s;">Purchase</button>
+        <button id="confirmPurchaseBtn" style="display:none; background: linear-gradient(90deg, #ff4e00 0%, #ffb300 100%); color: #fff; border: none; border-radius: 10px; padding: 16px 32px; font-size: 1.1em; font-weight: bold; box-shadow: 0 0 24px 6px #ffb300, 0 2px 8px rgba(0,0,0,0.12); cursor: pointer; margin-top: 18px; transition: box-shadow 0.2s, background 0.2s;">Are you sure you want to buy the limited time Aetherstrike?</button>
+        <button id="learnMoreBtn" style="background: linear-gradient(90deg, #00ff00 0%, #00b300 100%); color: #fff; border: none; border-radius: 10px; padding: 10px 32px; font-size: 1em; font-weight: bold; box-shadow: 0 0 18px 4px #00ff00, 0 2px 8px rgba(0,0,0,0.12); cursor: pointer; transition: box-shadow 0.2s, background 0.2s; margin-top: 18px;">Learn More</button>
+        <div id="learnMoreFrame" style="display:none; background: #111; border: 2px solid #00ff00; border-radius: 14px; color: #00ff00; font-family: 'Orbitron', Arial, sans-serif; font-size: 1.1em; margin-top: 24px; padding: 28px 32px; max-width: 480px; text-align: center; box-shadow: 0 4px 24px rgba(0,255,0,0.08);">
+            The Aetherstrike<br><br>
+            A special sniper <b>from the future</b>.<br><br>
+            Buy it before it's gone forever!
+        </div>
+    </div>
+    <script>
+        document.getElementById('learnMoreBtn').onclick = function() {
+            var frame = document.getElementById('learnMoreFrame');
+            frame.style.display = (frame.style.display === 'none') ? 'block' : 'none';
+        };
+        document.getElementById('purchaseBtn').onclick = function() {
+            document.getElementById('confirmPurchaseBtn').style.display = 'block';
+        };
+        document.getElementById('confirmPurchaseBtn').onclick = function() {
+            window.location.href = 'purchase.html';
+        };
+    </script>
+    
+</body>
+<hr style="border: 0; border-top: 2px solid #00ff00; margin: 48px auto 32px auto; width: 60%;">
+<div style="display: flex; justify-content: center; gap: 32px; margin-bottom: 36px;">
+    <a href="https://www.youtube.com/@CarntusYT" target="_blank" style="text-decoration: none;">
+        <button style="background: linear-gradient(90deg, #2196f3 0%, #1565c0 100%); color: #fff; border: none; border-radius: 10px; padding: 14px 36px; font-size: 1.1em; font-weight: bold; box-shadow: 0 0 16px 2px #2196f3; cursor: pointer; transition: background 0.2s;">YouTube Channel</button>
+    </a>
+    <a href="https://www.roblox.com/communities/33770665/The-Classic-Arcade#!/about" target="_blank" style="text-decoration: none;">
+        <button style="background: linear-gradient(90deg, #FFD600 0%, #FFC300 100%); color: #333; border: none; border-radius: 10px; padding: 14px 36px; font-size: 1.1em; font-weight: bold; box-shadow: 0 0 16px 2px #FFD600; cursor: pointer; transition: background 0.2s;">Roblox Group</button>
+    </a>
+    <a href="https://www.roblox.com/games/113395575597453/Sniper-Madness" target="_blank" style="text-decoration: none;">
+        <button style="background: linear-gradient(90deg, #00e676 0%, #00b248 100%); color: #fff; border: none; border-radius: 10px; padding: 14px 36px; font-size: 1.1em; font-weight: bold; box-shadow: 0 0 16px 2px #00e676; cursor: pointer; transition: background 0.2s;">Roblox Game</button>
+    </a>
+</div>
+<p style="text-align: center; color: #00ff00; -webkit-text-stroke: 1px #fff; font-size: 1.2em; font-family: 'Orbitron', Arial, sans-serif; margin-top: 32px;">
+    © 2025 The Classic Arcade. All rights reserved.
+</p>
+
+</html>
