@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>The Classic Arcade</title>
+    <link rel="icon" href="img/WebsiteIcon.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Orbitron:900&display=swap" rel="stylesheet">
     <style>
         @keyframes growShrink {
@@ -56,8 +57,16 @@
     <p style="text-align: center; color: #00ff00; -webkit-text-stroke: 1px #fff; font-size: 1.3em; font-family: 'Orbitron', Arial, sans-serif; margin-bottom: 32px; position: static; background: none; padding: 0; left: auto; top: auto; transform: none; z-index: auto;">Welcome to The Classic Arcade also known as TCA. A website that makes games on Roblox. Our most recent game is as Sniper Madness.</p>
     
     <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
-        <button id="purchaseBtn" style="background: linear-gradient(90deg, #FFD700 0%, #FFC300 100%); color: #333; border: none; border-radius: 12px; padding: 24px 64px; font-size: 2em; font-weight: bold; box-shadow: 0 0 24px 6px #FFD700, 0 4px 16px rgba(0,0,0,0.15); cursor: pointer; margin-top: 32px; transition: box-shadow 0.2s, background 0.2s;">Purchase</button>
-        <button id="confirmPurchaseBtn" style="display:none; background: linear-gradient(90deg, #ff4e00 0%, #ffb300 100%); color: #fff; border: none; border-radius: 10px; padding: 16px 32px; font-size: 1.1em; font-weight: bold; box-shadow: 0 0 24px 6px #ffb300, 0 2px 8px rgba(0,0,0,0.12); cursor: pointer; margin-top: 18px; transition: box-shadow 0.2s, background 0.2s;">Are you sure you wanna buy the sniper 101?</button>
+        <div style="display: flex; flex-direction: row; align-items: flex-start; gap: 24px;">
+            <button id="purchaseBtn" style="background: linear-gradient(90deg, #FFD700 0%, #FFC300 100%); color: #333; border: none; border-radius: 12px; padding: 24px 64px; font-size: 2em; font-weight: bold; box-shadow: 0 0 24px 6px #FFD700, 0 4px 16px rgba(0,0,0,0.15); cursor: pointer; margin-top: 32px; transition: box-shadow 0.2s, background 0.2s;">Purchase</button>
+            <div id="passwordPopup" style="background:#111; border:2px solid #00ff00; border-radius:14px; color:#00ff00; font-family:'Orbitron',Arial,sans-serif; font-size:1.1em; padding:24px 32px; box-shadow:0 4px 24px rgba(0,255,0,0.08); text-align:center; margin-top:32px;">
+                <span style="font-weight:bold; font-size:1.2em;">Enter Password</span><br><br>
+                <input type="password" id="popupPasswordInput" placeholder="Password" style="font-size:1.1em; padding:8px; border-radius:8px; border:1px solid #00ff00; margin-bottom:12px; width:180px;">
+                <br>
+                <button onclick="checkPopupPassword()" style="background:linear-gradient(90deg,#00ff00 0%,#003300 100%); color:#fff; border:none; border-radius:10px; padding:8px 24px; font-size:1em; font-weight:bold; box-shadow:0 0 12px 2px #00ff00; cursor:pointer; margin-top:8px;">Submit</button>
+                <div id="popupErrorMsg" style="color:#ff4e00; margin-top:10px; font-size:1em;"></div>
+            </div>
+        </div>
         <button id="learnMoreBtn" style="background: linear-gradient(90deg, #00ff00 0%, #00b300 100%); color: #fff; border: none; border-radius: 10px; padding: 10px 32px; font-size: 1em; font-weight: bold; box-shadow: 0 0 18px 4px #00ff00, 0 2px 8px rgba(0,0,0,0.12); cursor: pointer; transition: box-shadow 0.2s, background 0.2s; margin-top: 18px;">Learn More</button>
         <div id="learnMoreFrame" style="display:none; background: #111; border: 2px solid #00ff00; border-radius: 14px; color: #00ff00; font-family: 'Orbitron', Arial, sans-serif; font-size: 1.1em; margin-top: 24px; padding: 28px 32px; max-width: 480px; text-align: center; box-shadow: 0 4px 24px rgba(0,255,0,0.08);">
             The sniper 101.<br><br>
@@ -81,6 +90,16 @@
         document.getElementById('confirmPurchaseBtn').onclick = function() {
             window.location.href = 'purchase.html';
         };
+        function checkPopupPassword() {
+    var input = document.getElementById('popupPasswordInput').value;
+    var errorMsg = document.getElementById('popupErrorMsg');
+    if (input === 'Rush1956*') {
+        errorMsg.textContent = '';
+        window.location.href = 'carntus-plan.html';
+    } else {
+        errorMsg.textContent = 'Incorrect password. Please try again.';
+    }
+}
     </script>
     
 </body>
