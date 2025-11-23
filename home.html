@@ -1,184 +1,83 @@
-<!-- ...existing code... -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <title>The Classic Arcade</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <style>
-        :root{
-            --gap:16px;
-            --border-thickness:12px;
-            --purple-a:#9b59ff;
-            --purple-b:#4b0082;
-            --bg:#000;
-        }
-        html,body{height:100%;margin:0;background:var(--bg);color:#fff;font-family:Inter,Arial,Helvetica,sans-serif}
-        /* outer container that shows the animated gradient outline */
-        .border {
-            position:fixed;
-            inset:0;
-            display:flex;
-            align-items:stretch;
-            justify-content:center;
-            pointer-events:none; /* outline doesn't block clicks */
-        }
-        .border::before{
-            content:"";
-            position:absolute;
-            inset:0;
-            background: conic-gradient(from 0deg, var(--purple-a), var(--purple-b), #5e2bd1, var(--purple-a));
-            filter: blur(12px);
-            z-index:0;
-            animation: spin 8s linear infinite;
-            border-radius:8px;
-        }
-        @keyframes spin{
-            from{transform: rotate(0deg);}
-            to{transform: rotate(360deg);}
-        }
-
-        /* inner page area (actual content) */
-        .inner{
-            position:relative;
-            z-index:1;
-            margin: calc(var(--border-thickness) + 4px);
-            background: #000; /* solid inner background so gradient only shows at edges */
-            border-radius:6px;
-            display:flex;
-            width:calc(100% - (var(--border-thickness) * 2) - 8px);
-            height:calc(100% - (var(--border-thickness) * 2) - 8px);
-            box-sizing:border-box;
-            overflow:hidden;
-            pointer-events:auto;
-        }
-
-        /* layout */
-        .sidebar{
-            width:320px;
-            padding:40px 24px;
-            box-sizing:border-box;
-            border-right:1px solid rgba(255,255,255,0.03);
-            display:flex;
-            flex-direction:column;
-            gap:24px;
-            align-items:flex-start;
-            justify-content:flex-start;
-            background: linear-gradient(0deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
-        }
-        .title-side{
-            font-size:40px;
-            font-weight:800;
-            line-height:1;
-            letter-spacing:1px;
-            color:#fff;
-            writing-mode:horizontal-tb;
-            -webkit-text-stroke: 0.5px rgba(0,0,0,0.6);
-        }
-
-        .side-buttons{
-            display:flex;
-            flex-direction:column;
-            gap:12px;
-            margin-top:6px;
-            width:100%;
-        }
-        .side-btn{
-            width:100%;
-            padding:14px 18px;
-            font-size:16px;
-            border-radius:10px;
-            border: none;
-            cursor: pointer;
-            background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-            color:#fff;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.6);
-        }
-        .side-btn:active{ transform: translateY(1px); }
-
-        .main{
-            flex:1;
-            padding:48px;
-            box-sizing:border-box;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-        }
-
-        /* make sure the gradient outline is visible on small screens too */
-        @media (max-width:540px){
-            .sidebar{width:220px;padding:20px}
-            .title-side{font-size:28px}
-        }
-    </style>
-</head>
-<body>
-    <div class="border" aria-hidden="true"></div>
-
-    <div class="inner" role="main">
-        <aside class="sidebar" aria-label="Side">
-            <div class="title-side">Carnstrap</div>
-
-            <div class="side-buttons" aria-hidden="false">
-                <button class="side-btn" type="button" id="settingsBtn">Settings</button>
-                <button class="side-btn" type="button" id="launchRobloxBtn">Launch Roblox</button>
-            </div>
-        </aside>
-
-        <section class="main">
-            <!-- main area left intentionally blank -->
-            <div style="text-align:center;opacity:0.06;max-width:680px;">
-                <!-- subtle placeholder so page doesn't look empty -->
-                <h2 style="color:#fff;opacity:0.9;margin:0 0 8px 0;font-weight:700">The Classic Arcade</h2>
-                <p style="margin:0;color:#fff;opacity:0.65">Welcome — content goes here.</p>
-            </div>
-        </section>
-    </div>
-
-    <!-- combined script: Launch Roblox attempt + Settings placeholder -->
+// ...existing code...
+    <!-- combined script: Launch Roblox + Settings behavior + optional settings-panel logic -->
     <script>
     (function () {
-        // Helper: try to open a protocol and fallback to a URL after delay
+        // Try to open a custom protocol; fallback to a URL after timeout.
         function tryOpenProtocol(protocolUrl, fallbackUrl, timeout) {
             timeout = timeout || 1500;
             var start = Date.now();
-            // iframe method
             var iframe = document.createElement('iframe');
             iframe.style.display = 'none';
             iframe.src = protocolUrl;
             document.body.appendChild(iframe);
 
-            // attempt direct location change as well (some browsers handle it)
             try { window.location = protocolUrl; } catch (e) {}
 
             setTimeout(function () {
                 try { document.body.removeChild(iframe); } catch (e) {}
-                // if still on page, open fallback
                 if (Date.now() - start < (timeout + 300)) {
                     if (fallbackUrl) window.location.href = fallbackUrl;
                 }
             }, timeout);
         }
 
+        // Launch Roblox button
         var launchBtn = document.getElementById('launchRobloxBtn');
         if (launchBtn) {
             launchBtn.addEventListener('click', function (e) {
                 e.preventDefault();
-                // Try the Roblox custom protocol; fallback to Roblox site
                 tryOpenProtocol('roblox-player://', 'https://www.roblox.com/', 1500);
             });
         }
 
+        // Settings button: if a settings panel exists on the page, focus it; otherwise redirect to settings.html
         var settingsBtn = document.getElementById('settingsBtn');
+        var settingsPanel = document.querySelector('.settings-panel');
         if (settingsBtn) {
             settingsBtn.addEventListener('click', function (e) {
                 e.preventDefault();
-                // placeholder — add settings behavior here if needed
-                alert('Settings placeholder');
+                if (settingsPanel) {
+                    // bring settings panel into view and briefly highlight
+                    settingsPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    settingsPanel.style.transition = 'box-shadow 0.2s';
+                    settingsPanel.style.boxShadow = '0 0 0 3px rgba(75,0,130,0.45)';
+                    setTimeout(function () {
+                        settingsPanel.style.boxShadow = '';
+                    }, 900);
+                } else {
+                    window.location.href = 'settings.html';
+                }
             });
         }
+
+        // Optional settings-panel logic: emoji style selection & preview (no-op if elements are missing)
+        var radioWin11 = document.getElementById('emojiWin11');
+        var radioWin10 = document.getElementById('emojiWin10');
+        var previewIcons = document.getElementById('previewIcons');
+
+        var emojiSets = {
+            win11: ['😀','👍','🎉'],
+            win10: ['🙂','👌','✨']
+        };
+
+        function applyEmojiStyle(style) {
+            if (!style) return;
+            var set = emojiSets[style] || emojiSets.win11;
+            if (previewIcons) previewIcons.textContent = set.join(' ');
+            try { localStorage.setItem('emojiStyle', style); } catch (e) {}
+            if (launchBtn) launchBtn.title = 'Launch Roblox — emoji style: ' + (style === 'win11' ? 'Windows 11' : 'Windows 10');
+        }
+
+        // load saved preference (default win11)
+        try {
+            var saved = localStorage.getItem('emojiStyle') || 'win11';
+            if (saved === 'win11' && radioWin11) radioWin11.checked = true;
+            if (saved === 'win10' && radioWin10) radioWin10.checked = true;
+            applyEmojiStyle(saved);
+        } catch (e) {}
+
+        if (radioWin11) radioWin11.addEventListener('change', function () { if (this.checked) applyEmojiStyle('win11'); });
+        if (radioWin10) radioWin10.addEventListener('change', function () { if (this.checked) applyEmojiStyle('win10'); });
     })();
     </script>
-</body>
-</html>
-<!-- ...existing code... -->
+// ...existing code...
