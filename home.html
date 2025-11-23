@@ -1,73 +1,105 @@
-    /* inner page area (actual content) */
-    .inner{
-        position:relative;
-        z-index:1;
-        margin: calc(var(--border-thickness) + 4px);
-        background: #000; /* solid inner background so gradient only shows at edges */
-        border-radius:6px;
-        display:flex;
-        width:calc(100% - (var(--border-thickness) * 2) - 8px);
-        height:calc(100% - (var(--border-thickness) * 2) - 8px);
-        box-sizing:border-box;
-        overflow:hidden;
-        pointer-events:auto;
-    }
+<!-- ...existing code... -->
+            <div class="side-buttons" aria-hidden="false">
+                <!-- ...existing code... -->
+                <button class="side-btn" type="button" id="settingsBtn">Settings</button>
+                <button class="side-btn" type="button" id="launchRobloxBtn">Launch Roblox</button>
+                <!-- ...existing code... -->
+            </div>
+<!-- ...existing code... -->
 
-    /* layout */
-    .sidebar{
-        width:320px;
-        padding:40px 24px;
-        box-sizing:border-box;
-        border-right:1px solid rgba(255,255,255,0.03);
-        display:flex;
-        flex-direction:column;
-        gap:24px;
-        align-items:flex-start;
-        justify-content:flex-start;
-        background: linear-gradient(0deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
-    }
-    .title-side{
-        font-size:40px;
-        font-weight:800;
-        line-height:1;
-        letter-spacing:1px;
-        color:#fff;
-        writing-mode:horizontal-tb;
-        -webkit-text-stroke: 0.5px rgba(0,0,0,0.6);
-    }
+<!-- ...existing code... -->
+    </div>
+</body>
 
-    .side-buttons{
-        display:flex;
-        flex-direction:column;
-        gap:12px;
-        margin-top:6px;
-        width:100%;
-    }
-    .side-btn{
-        width:100%;
-        padding:14px 18px;
-        font-size:16px;
-        border-radius:10px;
-        border: none;
-        cursor: pointer;
-        background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-        color:#fff;
-        box-shadow: 0 6px 18px rgba(0,0,0,0.6);
-    }
-    .side-btn:active{ transform: translateY(1px); }
+<!-- add script to attempt launching the Roblox app with a fallback to the website -->
+<script>
+    (function(){
+        var btn = document.getElementById('launchRobloxBtn');
+        if (!btn) return;
 
-    .main{
-        flex:1;
-        padding:48px;
-        box-sizing:border-box;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-    }
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
 
-    /* make sure the gradient outline is visible on small screens too */
-    @media (max-width:540px){
-        .sidebar{width:220px;padding:20px}
-        .title-side{font-size:28px}
-    }
-</style>
+            // Try opening the Roblox protocol. Behavior varies by browser/OS.
+            var now = Date.now();
+            var opened = false;
+
+            // Approach 1: try using a hidden iframe (works in some desktop browsers)
+            var iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = 'roblox-player://';
+            document.body.appendChild(iframe);
+
+            // If protocol handler exists, user agent should switch to app.
+            // After a short delay, if still on page, fall back to Roblox website.
+            setTimeout(function () {
+                document.body.removeChild(iframe);
+                // If still on page after ~1.5s, open Roblox website as fallback
+                if (Date.now() - now < 1800) {
+                    window.location.href = 'https://www.roblox.com/';
+                }
+            }, 1500);
+
+            // As an additional attempt, try window.location (some browsers handle this)
+            try {
+                window.location = 'roblox-player://';
+            } catch (err) {
+                // ignore
+            }
+        });
+    })();
+</script>
+<!-- ...existing code... -->
+```// filepath: c:\DO NOT DELETE\The Classic Arcade\home.html
+<!-- ...existing code... -->
+            <div class="side-buttons" aria-hidden="false">
+                <!-- ...existing code... -->
+                <button class="side-btn" type="button" id="settingsBtn">Settings</button>
+                <button class="side-btn" type="button" id="launchRobloxBtn">Launch Roblox</button>
+                <!-- ...existing code... -->
+            </div>
+<!-- ...existing code... -->
+
+<!-- ...existing code... -->
+    </div>
+</body>
+
+<!-- add script to attempt launching the Roblox app with a fallback to the website -->
+<script>
+    (function(){
+        var btn = document.getElementById('launchRobloxBtn');
+        if (!btn) return;
+
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            // Try opening the Roblox protocol. Behavior varies by browser/OS.
+            var now = Date.now();
+            var opened = false;
+
+            // Approach 1: try using a hidden iframe (works in some desktop browsers)
+            var iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = 'roblox-player://';
+            document.body.appendChild(iframe);
+
+            // If protocol handler exists, user agent should switch to app.
+            // After a short delay, if still on page, fall back to Roblox website.
+            setTimeout(function () {
+                document.body.removeChild(iframe);
+                // If still on page after ~1.5s, open Roblox website as fallback
+                if (Date.now() - now < 1800) {
+                    window.location.href = 'https://www.roblox.com/';
+                }
+            }, 1500);
+
+            // As an additional attempt, try window.location (some browsers handle this)
+            try {
+                window.location = 'roblox-player://';
+            } catch (err) {
+                // ignore
+            }
+        });
+    })();
+</script>
+<!-- ...existing code... -->
