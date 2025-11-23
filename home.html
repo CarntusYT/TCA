@@ -1,123 +1,279 @@
+<!-- ...existing code... -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="utf-8" />
     <title>The Classic Arcade</title>
-    <link rel="icon" href="img/WebsiteIcon.png" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css?family=Orbitron:900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <style>
-        @keyframes growShrink {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.35); }
-            100% { transform: scale(1); }
+        :root{
+            --gap:16px;
+            --border-thickness:12px;
+            --purple-a:#9b59ff;
+            --purple-b:#4b0082;
+            --bg:#000;
         }
-        .grow-animate {
-            display: inline-block;
-            animation: growShrink 1.2s infinite;
-            transition: transform 0.2s;
+        html,body{height:100%;margin:0;background:var(--bg);color:#fff;font-family:Inter,Arial,Helvetica,sans-serif}
+        /* outer container that shows the animated gradient outline */
+        .border {
+            position:fixed;
+            inset:0;
+            display:flex;
+            align-items:stretch;
+            justify-content:center;
+            pointer-events:none; /* outline doesn't block clicks */
         }
-        .grow-animate:hover {
-            animation-play-state: paused;
+        .border::before{
+            content:"";
+            position:absolute;
+            inset:0;
+            background: conic-gradient(from 0deg, var(--purple-a), var(--purple-b), #5e2bd1, var(--purple-a));
+            filter: blur(12px);
+            z-index:0;
+            animation: spin 8s linear infinite;
+            border-radius:8px;
         }
-        @keyframes growOnHover {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.18); }
+        @keyframes spin{
+            from{transform: rotate(0deg);}
+            to{transform: rotate(360deg);}
         }
-        button:hover {
-            animation: growOnHover 0.18s forwards;
+
+        /* inner page area (actual content) */
+        .inner{
+            position:relative;
+            z-index:1;
+            margin: calc(var(--border-thickness) + 4px);
+            background: #000; /* solid inner background so gradient only shows at edges */
+            border-radius:6px;
+            display:flex;
+            width:calc(100% - (var(--border-thickness) * 2) - 8px);
+            height:calc(100% - (var(--border-thickness) * 2) - 8px);
+            box-sizing:border-box;
+            overflow:hidden;
+            pointer-events:auto;
         }
-        button {
-            transition: transform 0.18s;
+
+        /* layout */
+        .sidebar{
+            width:320px;
+            padding:40px 24px;
+            box-sizing:border-box;
+            border-right:1px solid rgba(255,255,255,0.03);
+            display:flex;
+            flex-direction:column;
+            gap:24px;
+            align-items:flex-start;
+            justify-content:flex-start;
+            background: linear-gradient(0deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
         }
-        .fixed-grow-code {
-            display: inline-block;
-            animation: growShrink 1.2s infinite;
-            transition: transform 0.2s;
-            position: fixed;
-            left: 50%;
-            top: 16px;
-            transform: translateX(-50%);
-            z-index: 9999;
-            background: rgba(0,0,0,0.85);
-            padding: 12px 32px;
-            border-radius: 12px;
-            font-size: 2em;
-            color: #00ff00;
-            box-shadow: 0 0 24px 6px #00ff00;
+        .title-side{
+            font-size:40px;
+            font-weight:800;
+            line-height:1;
+            letter-spacing:1px;
+            color:#fff;
+            writing-mode:horizontal-tb;
+            -webkit-text-stroke: 0.5px rgba(0,0,0,0.6);
         }
-        @keyframes rainbowText {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+
+        .side-buttons{
+            display:flex;
+            flex-direction:column;
+            gap:12px;
+            margin-top:6px;
+            width:100%;
+        }
+        .side-btn{
+            width:100%;
+            padding:14px 18px;
+            font-size:16px;
+            border-radius:10px;
+            border: none;
+            cursor: pointer;
+            background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+            color:#fff;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+        }
+        .side-btn:active{ transform: translateY(1px); }
+
+        .main{
+            flex:1;
+            padding:48px;
+            box-sizing:border-box;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
+
+        /* make sure the gradient outline is visible on small screens too */
+        @media (max-width:540px){
+            .sidebar{width:220px;padding:20px}
+            .title-side{font-size:28px}
         }
     </style>
 </head>
-<body style="background: linear-gradient(135deg, #000 0%, #003300 100%); color: #fff;">
-    <img src="New Project(223).png" alt="Classic Arcade Logo" style="display:block; margin:32px auto 0 auto; max-width:220px; border-radius:16px; box-shadow:0 4px 16px rgba(0,0,0,0.3);">
-    <h1 style="text-align: center; color: #00ff00; -webkit-text-stroke: 2px #fff; font-size: 2.8em; font-family: 'Orbitron', Arial, sans-serif; margin-top: 48px; margin-bottom: 32px; position: static; background: none; padding: 0; left: auto; top: auto; transform: none; z-index: auto;">THE CLASSIC ARCADE</h1>
-    <p style="text-align: center; color: #00ff00; -webkit-text-stroke: 1px #fff; font-size: 1.3em; font-family: 'Orbitron', Arial, sans-serif; margin-bottom: 32px; position: static; background: none; padding: 0; left: auto; top: auto; transform: none; z-index: auto;">Welcome to The Classic Arcade also known as TCA. A website that makes games on Roblox. Our most recent game is as Sniper Madness.</p>
-    
-    <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
-        <div style="display: flex; flex-direction: row; align-items: flex-start; gap: 24px;">
-            <button id="purchaseBtn" style="background: linear-gradient(90deg, #FFD700 0%, #FFC300 100%); color: #333; border: none; border-radius: 12px; padding: 24px 64px; font-size: 2em; font-weight: bold; box-shadow: 0 0 24px 6px #FFD700, 0 4px 16px rgba(0,0,0,0.15); cursor: pointer; margin-top: 32px; transition: box-shadow 0.2s, background 0.2s;">Purchase</button>
-            <div id="passwordPopup" style="background:#111; border:2px solid #00ff00; border-radius:14px; color:#00ff00; font-family:'Orbitron',Arial,sans-serif; font-size:1.1em; padding:24px 32px; box-shadow:0 4px 24px rgba(0,255,0,0.08); text-align:center; margin-top:32px;">
-                <span style="font-weight:bold; font-size:1.2em;">Enter Password</span><br><br>
-                <input type="password" id="popupPasswordInput" placeholder="Password" style="font-size:1.1em; padding:8px; border-radius:8px; border:1px solid #00ff00; margin-bottom:12px; width:180px;">
-                <br>
-                <button onclick="checkPopupPassword()" style="background:linear-gradient(90deg,#00ff00 0%,#003300 100%); color:#fff; border:none; border-radius:10px; padding:8px 24px; font-size:1em; font-weight:bold; box-shadow:0 0 12px 2px #00ff00; cursor:pointer; margin-top:8px;">Submit</button>
-                <div id="popupErrorMsg" style="color:#ff4e00; margin-top:10px; font-size:1em;"></div>
+<body>
+    <div class="border" aria-hidden="true"></div>
+
+    <div class="inner" role="main">
+        <aside class="sidebar" aria-label="Side">
+            <div class="title-side">Carnstrap</div>
+
+            <div class="side-buttons" aria-hidden="false">
+                <button class="side-btn" type="button">Button 1</button>
+                <button class="side-btn" type="button">Button 2</button>
             </div>
-        </div>
-        <button id="learnMoreBtn" style="background: linear-gradient(90deg, #00ff00 0%, #00b300 100%); color: #fff; border: none; border-radius: 10px; padding: 10px 32px; font-size: 1em; font-weight: bold; box-shadow: 0 0 18px 4px #00ff00, 0 2px 8px rgba(0,0,0,0.12); cursor: pointer; transition: box-shadow 0.2s, background 0.2s; margin-top: 18px;">Learn More</button>
-        <div id="learnMoreFrame" style="display:none; background: #111; border: 2px solid #00ff00; border-radius: 14px; color: #00ff00; font-family: 'Orbitron', Arial, sans-serif; font-size: 1.1em; margin-top: 24px; padding: 28px 32px; max-width: 480px; text-align: center; box-shadow: 0 4px 24px rgba(0,255,0,0.08);">
-            The sniper 101.<br><br>
-            A very powerful sniper holding much energy within the body
-        </div>
+        </aside>
+
+        <section class="main">
+            <!-- main area left intentionally blank -->
+            <div style="text-align:center;opacity:0.06;max-width:680px;">
+                <!-- subtle placeholder so page doesn't look empty -->
+                <h2 style="color:#fff;opacity:0.9;margin:0 0 8px 0;font-weight:700">The Classic Arcade</h2>
+                <p style="margin:0;color:#fff;opacity:0.65">Welcome — content goes here.</p>
+            </div>
+        </section>
     </div>
-    <script>
-        document.getElementById('learnMoreBtn').onclick = function() {
-            var frame = document.getElementById('learnMoreFrame');
-            frame.style.display = (frame.style.display === 'none') ? 'block' : 'none';
-        };
-        document.getElementById('purchaseBtn').onclick = function() {
-            var confirmBtn = document.getElementById('confirmPurchaseBtn');
-            var now = new Date().getTime();
-            var endTime = new Date('2025-07-30T00:00:00Z').getTime();
-            confirmBtn.textContent = (now < endTime)
-                ? 'Are you sure you wanna buy the Aetherstrike?'
-                : 'Are you sure you wanna buy the sniper 101?';
-            confirmBtn.style.display = 'block';
-        };
-        document.getElementById('confirmPurchaseBtn').onclick = function() {
-            window.location.href = 'purchase.html';
-        };
-        function checkPopupPassword() {
-    var input = document.getElementById('popupPasswordInput').value;
-    var errorMsg = document.getElementById('popupErrorMsg');
-    if (input === 'Rush1956*') {
-        errorMsg.textContent = '';
-        window.location.href = 'carntus-plan.html';
-    } else {
-        errorMsg.textContent = 'Incorrect password. Please try again.';
-    }
-}
-    </script>
-    
 </body>
-<hr style="border: 0; border-top: 2px solid #00ff00; margin: 48px auto 32px auto; width: 60%;">
-<div style="display: flex; justify-content: center; gap: 32px; margin-bottom: 36px;">
-    <a href="https://www.youtube.com/@CarntusYT" target="_blank" style="text-decoration: none;">
-        <button style="background: linear-gradient(90deg, #2196f3 0%, #1565c0 100%); color: #fff; border: none; border-radius: 10px; padding: 14px 36px; font-size: 1.1em; font-weight: bold; box-shadow: 0 0 16px 2px #2196f3; cursor: pointer; transition: background 0.2s;">YouTube Channel</button>
-    </a>
-    <a href="https://www.roblox.com/communities/33770665/The-Classic-Arcade#!/about" target="_blank" style="text-decoration: none;">
-        <button style="background: linear-gradient(90deg, #FFD600 0%, #FFC300 100%); color: #333; border: none; border-radius: 10px; padding: 14px 36px; font-size: 1.1em; font-weight: bold; box-shadow: 0 0 16px 2px #FFD600; cursor: pointer; transition: background 0.2s;">Roblox Group</button>
-    </a>
-    <a href="https://www.roblox.com/games/113395575597453/Sniper-Madness" target="_blank" style="text-decoration: none;">
-        <button style="background: linear-gradient(90deg, #00e676 0%, #00b248 100%); color: #fff; border: none; border-radius: 10px; padding: 14px 36px; font-size: 1.1em; font-weight: bold; box-shadow: 0 0 16px 2px #00e676; cursor: pointer; transition: background 0.2s;">Roblox Game</button>
-    </a>
-</div>
-<div style="display: flex; justify-content: center; align-items: center; gap: 18px; margin:48px 0 36px 0;">
-    <span id="timer-label" style="font-family:'Orbitron',Arial,sans-serif; font-size:2.2em; font-weight:900; letter-spacing:2px; text-shadow:0 0 12px #00ff00; background: linear-gradient(90deg, #ff0000, #ff9900, #ffee00, #00ff00, #00e6ff, #0000ff, #9900ff, #ff00cc); background-size: 400% 400%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: rainbowText 4s linear infinite;">Aetherstrike is only out for a week before the next gun is coming out for 2 weeks</span>
-</div>
-<p style="text-align: center; color: #00ff00; -webkit-text-stroke: 1px #fff; font-size: 1.2em; font-family: 'Orbitron', Arial, sans-serif; margin-top: 32px;">
-    © 2025 The Classic Arcade. All rights reserved.
-</p>
+</html>
+<!-- ...existing code... -->
+```// filepath: c:\DO NOT DELETE\The Classic Arcade\home.html
+<!-- ...existing code... -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>The Classic Arcade</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <style>
+        :root{
+            --gap:16px;
+            --border-thickness:12px;
+            --purple-a:#9b59ff;
+            --purple-b:#4b0082;
+            --bg:#000;
+        }
+        html,body{height:100%;margin:0;background:var(--bg);color:#fff;font-family:Inter,Arial,Helvetica,sans-serif}
+        /* outer container that shows the animated gradient outline */
+        .border {
+            position:fixed;
+            inset:0;
+            display:flex;
+            align-items:stretch;
+            justify-content:center;
+            pointer-events:none; /* outline doesn't block clicks */
+        }
+        .border::before{
+            content:"";
+            position:absolute;
+            inset:0;
+            background: conic-gradient(from 0deg, var(--purple-a), var(--purple-b), #5e2bd1, var(--purple-a));
+            filter: blur(12px);
+            z-index:0;
+            animation: spin 8s linear infinite;
+            border-radius:8px;
+        }
+        @keyframes spin{
+            from{transform: rotate(0deg);}
+            to{transform: rotate(360deg);}
+        }
+
+        /* inner page area (actual content) */
+        .inner{
+            position:relative;
+            z-index:1;
+            margin: calc(var(--border-thickness) + 4px);
+            background: #000; /* solid inner background so gradient only shows at edges */
+            border-radius:6px;
+            display:flex;
+            width:calc(100% - (var(--border-thickness) * 2) - 8px);
+            height:calc(100% - (var(--border-thickness) * 2) - 8px);
+            box-sizing:border-box;
+            overflow:hidden;
+            pointer-events:auto;
+        }
+
+        /* layout */
+        .sidebar{
+            width:320px;
+            padding:40px 24px;
+            box-sizing:border-box;
+            border-right:1px solid rgba(255,255,255,0.03);
+            display:flex;
+            flex-direction:column;
+            gap:24px;
+            align-items:flex-start;
+            justify-content:flex-start;
+            background: linear-gradient(0deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+        }
+        .title-side{
+            font-size:40px;
+            font-weight:800;
+            line-height:1;
+            letter-spacing:1px;
+            color:#fff;
+            writing-mode:horizontal-tb;
+            -webkit-text-stroke: 0.5px rgba(0,0,0,0.6);
+        }
+
+        .side-buttons{
+            display:flex;
+            flex-direction:column;
+            gap:12px;
+            margin-top:6px;
+            width:100%;
+        }
+        .side-btn{
+            width:100%;
+            padding:14px 18px;
+            font-size:16px;
+            border-radius:10px;
+            border: none;
+            cursor: pointer;
+            background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+            color:#fff;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+        }
+        .side-btn:active{ transform: translateY(1px); }
+
+        .main{
+            flex:1;
+            padding:48px;
+            box-sizing:border-box;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
+
+        /* make sure the gradient outline is visible on small screens too */
+        @media (max-width:540px){
+            .sidebar{width:220px;padding:20px}
+            .title-side{font-size:28px}
+        }
+    </style>
+</head>
+<body>
+    <div class="border" aria-hidden="true"></div>
+
+    <div class="inner" role="main">
+        <aside class="sidebar" aria-label="Side">
+            <div class="title-side">Carnstrap</div>
+
+            <div class="side-buttons" aria-hidden="false">
+                <button class="side-btn" type="button">Button 1</button>
+                <button class="side-btn" type="button">Button 2</button>
+            </div>
+        </aside>
+
+        <section class="main">
+            <!-- main area left intentionally blank -->
+            <div style="text-align:center;opacity:0.06;max-width:680px;">
+                <!-- subtle placeholder so page doesn't look empty -->
+                <h2 style="color:#fff;opacity:0.9;margin:0 0 8px 0;font-weight:700">The Classic Arcade</h2>
+                <p style="margin:0;color:#fff;opacity:0.65">Welcome — content goes here.</p>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
+<!-- ...existing code... -->
